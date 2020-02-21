@@ -1,0 +1,143 @@
+'posisi kamera (pcam)
+Dim pcamx# = 0 
+Dim pcamy# = 0 
+Dim pcamz# = 7  
+
+'posisi titik fokus pandang (pref)
+Dim prefx# = 0 
+Dim prefy# = 0 
+Dim prefz# = -1             
+
+'kecepatan 
+Dim kecepatan# = 0.002
+
+'variabel untuk tekstur 
+Dim tekstur1                      
+Dim tekstur2
+Dim tekstur3
+Dim tekstur4
+Dim tekstur5
+Dim tekstur6
+
+'load gambar ke variabel teksturku 
+tekstur1 = loadmipmaptexture("1.jpg")
+tekstur2 = loadmipmaptexture("2.jpg")
+tekstur3 = loadmipmaptexture("3.jpg")
+tekstur4 = loadmipmaptexture("4.jpg")
+tekstur5 = loadmipmaptexture("5.jpg")
+tekstur6 = loadmipmaptexture("6.jpg")
+
+'aktifkan texture 2d di opengl 
+glEnable(GL_TEXTURE_2D)
+
+while true  
+glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+glLoadIdentity()
+
+gluLookAt(pcamx#, pcamy#, pcamz#, prefx#, prefy#, prefz#,0,1,0)
+ 
+glBindTexture(GL_TEXTURE_2D, tekstur1)
+glBegin(GL_QUADS) 'sisi depan  
+    glColor3f(1,0,0) 'merah
+    glVertex3f(1,1,-1) 'kanan atas    
+    
+    glColor3f(0,1,0) 'hijau
+    glVertex3f(1,-1,-1) 'kanan bawah
+    
+    glColor3f(0,0,1) 'biru
+    glVertex3f(-1,-1,-1) 'kiri bawah
+    
+    glColor3f(1,1,0)
+    glVertex3f(-1,1,-1)'kiri atas 
+glEnd()            
+
+glBindTexture(GL_TEXTURE_2D, tekstur2)
+glBegin(GL_QUADS) 'sisi belakang  
+    glColor3f(0,1,0) 'hijau
+    glVertex3f(1,1,1) 'kanan atas    
+    
+    glColor3f(1,0,0) 'merah
+    glVertex3f(1,-1,1) 'kanan bawah
+    
+    glColor3f(0,0,1) 'biru
+    glVertex3f(-1,-1,1) 'kiri bawah
+    
+    glColor3f(1,1,0)'kuning
+    glVertex3f(-1,1,1)'kiri atas 
+glEnd()            
+                          
+glBindTexture(GL_TEXTURE_2D, tekstur3)
+glBegin(GL_QUADS) 'sisi kanan   
+    glColor3f(0,1,0) 'hijau
+    glVertex3f(1,1,-1) 
+    
+    glColor3f(1,0,0) 'merah
+    glVertex3f(1,-1,-1) 
+    
+    glColor3f(0,0,1) 'biru
+    glVertex3f(1,-1,1) 
+    
+    glColor3f(1,1,0)'kuning
+    glVertex3f(1,1,1)
+glEnd()            
+                              
+glBindTexture(GL_TEXTURE_2D, tekstur4)
+glBegin(GL_QUADS) 'sisi atas   
+    glColor3f(0,1,0) 'hijau
+    glVertex3f(1,1,-1) 
+    
+    glColor3f(1,0,0) 'merah
+    glVertex3f(-1,1,-1) 
+    
+    glColor3f(0,0,1) 'biru
+    glVertex3f(-1,1,1) 
+    
+    glColor3f(1,1,0)'kuning
+    glVertex3f(1,1,1)
+glEnd()              
+
+glBindTexture(GL_TEXTURE_2D, tekstur5)
+glBegin(GL_QUADS) 'sisi kiri
+    glColor3f(1,0,1) 'ungu
+    glVertex3f(-1,-1,1) 
+    
+    glColor3f(1,0,0) 'merah
+    glVertex3f(-1,1,1) 
+    
+    glColor3f(0,0,1) 'biru
+    glVertex3f(-1,1,-1) 
+    
+    glColor3f(1,1,0)'kuning
+    glVertex3f(-1,-1,-1)
+glEnd()
+
+glBindTexture(GL_TEXTURE_2D, tekstur6)
+glBegin(GL_QUADS) 'sisi bawah
+    glColor3f(1,0,0) 'merah
+    glVertex3f(-1,-1,1) 
+    
+    glColor3f(0,1,0) 'hijau
+    glVertex3f(1,-1,1) 
+    
+    glColor3f(0,0,1) 'biru
+    glVertex3f(1,-1,-1) 
+    
+    glColor3f(1,1,0)'kuning
+    glVertex3f(-1,-1,-1)
+glEnd()              
+
+swapBuffers()
+
+if scankeydown(VK_RIGHT) then 
+pcamx# = pcamx# + kecepatan#
+prefx# = prefx# + kecepatan#
+elseif scankeydown(VK_LEFT) then 
+pcamx# = pcamx# - kecepatan# 
+elseif scankeydown(VK_UP) then 
+pcamz# = pcamz# - kecepatan#
+elseif scankeydown(VK_DOWN) then 
+pcamz# = pcamz# + kecepatan# 
+endif 
+
+wend  
+
